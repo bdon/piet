@@ -93,6 +93,14 @@ impl RenderContext for NullRenderContext {
     ) {
     }
 
+    fn stroke_text(
+        &mut self,
+        _layout: &Self::TextLayout,
+        _pos: impl Into<Point>,
+        width: f64,
+    ) {
+    }
+
     fn save(&mut self) -> Result<(), Error> {
         Ok(())
     }

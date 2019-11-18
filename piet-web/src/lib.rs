@@ -227,6 +227,19 @@ impl<'a> RenderContext for WebRenderContext<'a> {
         }
     }
 
+    fn stroke_text(
+        &mut self,
+        layout: &Self::TextLayout,
+        pos: impl Into<Point>,
+        width: f64,
+    ) {
+        let pos = pos.into();
+        self.set_stroke(width, None);
+        if let Err(e) = self.ctx.stroke_text(&layout.text, pos.x, pos.y).wrap() {
+            self.err = Err(e);
+        }
+    }
+
     fn save(&mut self) -> Result<(), Error> {
         self.ctx.save();
         Ok(())

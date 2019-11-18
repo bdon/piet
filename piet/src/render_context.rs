@@ -130,6 +130,13 @@ where
         brush: &impl IntoBrush<Self>,
     );
 
+    fn stroke_text(
+        &mut self,
+        layout: &Self::TextLayout,
+        pos: impl Into<Point>,
+        width: f64,
+    );
+
     /// Save the context state.
     ///
     /// Pushes the current context state onto a stack, to be popped by
