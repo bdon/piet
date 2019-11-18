@@ -224,6 +224,24 @@ impl<'a> RenderContext for CairoRenderContext<'a> {
         }
     }
 
+    fn stroke_text(
+        &mut self,
+        layout: &Self::TextLayout,
+        pos: impl Into<Point>,
+        brush: &impl IntoBrush<Self>,
+        width: f64,
+    ) {
+        // TODO: bounding box for text
+        let brush = brush.make_brush(self, || Rect::ZERO);
+        self.ctx.set_scaled_font(&layout.font);
+        self.set_brush(&*brush);
+        let pos = pos.into();
+        self.ctx.move_to(pos.x, pos.y);
+        self.ctx.text_path(&layout.text);
+        self.set_stroke(width,None);
+        self.ctx.stroke();
+    }
+
     fn save(&mut self) -> Result<(), Error> {
         self.ctx.save();
         let state = self.transform_stack.last().copied().unwrap_or_default();

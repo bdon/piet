@@ -231,8 +231,13 @@ impl<'a> RenderContext for WebRenderContext<'a> {
         &mut self,
         layout: &Self::TextLayout,
         pos: impl Into<Point>,
+        brush: &impl IntoBrush<Self>,
         width: f64,
     ) {
+        // TODO: bounding box for text
+        let brush = brush.make_brush(self, || Rect::ZERO);
+        self.ctx.set_font(&layout.font.get_font_string());
+        self.set_brush(&*brush, true);
         let pos = pos.into();
         self.set_stroke(width, None);
         if let Err(e) = self.ctx.stroke_text(&layout.text, pos.x, pos.y).wrap() {

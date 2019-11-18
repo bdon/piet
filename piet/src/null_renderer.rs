@@ -97,7 +97,8 @@ impl RenderContext for NullRenderContext {
         &mut self,
         _layout: &Self::TextLayout,
         _pos: impl Into<Point>,
-        width: f64,
+        _brush: &impl IntoBrush<Self>,
+        _width: f64,
     ) {
     }
 

@@ -134,6 +134,7 @@ where
         &mut self,
         layout: &Self::TextLayout,
         pos: impl Into<Point>,
+        brush: &impl IntoBrush<Self>,
         width: f64,
     );
 
