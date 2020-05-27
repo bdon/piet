@@ -3,6 +3,14 @@
 use crate::kurbo::Point;
 use crate::Error;
 
+/// https://developer.mozilla.org/en-US/docs/Web/CSS/font-style
+#[derive(Clone)]
+pub enum FontStyle {
+    Normal,
+    Italic,
+    Oblique(Option<f64>),
+}
+
 pub trait Text {
     type FontBuilder: FontBuilder<Out = Self::Font>;
     type Font: Font;
@@ -10,7 +18,7 @@ pub trait Text {
     type TextLayoutBuilder: TextLayoutBuilder<Out = Self::TextLayout>;
     type TextLayout: TextLayout;
 
-    fn new_font_by_name(&mut self, name: &str, size: f64) -> Self::FontBuilder;
+    fn new_font_by_name(&mut self, name: &str, size: f64, weight: u32, style: FontStyle) -> Self::FontBuilder;
 
     fn new_text_layout(
         &mut self,

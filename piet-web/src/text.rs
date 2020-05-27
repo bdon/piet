@@ -10,7 +10,7 @@ use web_sys::CanvasRenderingContext2d;
 use piet::kurbo::Point;
 
 use piet::{
-    Error, Font, FontBuilder, HitTestMetrics, HitTestPoint, HitTestTextPosition, LineMetric, Text,
+    Error, Font, FontStyle, FontBuilder, HitTestMetrics, HitTestPoint, HitTestTextPosition, LineMetric, Text,
     TextLayout, TextLayoutBuilder,
 };
 use unicode_segmentation::UnicodeSegmentation;
@@ -47,27 +47,18 @@ pub struct WebTextLayoutBuilder {
     width: f64,
 }
 
-/// https://developer.mozilla.org/en-US/docs/Web/CSS/font-style
-#[allow(dead_code)] // TODO: Remove
-#[derive(Clone)]
-enum FontStyle {
-    Normal,
-    Italic,
-    Oblique(Option<f64>),
-}
-
 impl<'a> Text for WebRenderContext<'a> {
     type Font = WebFont;
     type FontBuilder = WebFontBuilder;
     type TextLayout = WebTextLayout;
     type TextLayoutBuilder = WebTextLayoutBuilder;
 
-    fn new_font_by_name(&mut self, name: &str, size: f64) -> Self::FontBuilder {
+    fn new_font_by_name(&mut self, name: &str, size: f64, weight: u32, style: FontStyle) -> Self::FontBuilder {
         let font = WebFont {
             family: name.to_owned(),
             size,
-            weight: 400,
-            style: FontStyle::Normal,
+            weight: weight,
+            style: style,
         };
         WebFontBuilder(font)
     }

@@ -5,7 +5,7 @@ use std::borrow::Cow;
 use kurbo::{Affine, Point, Rect, Shape};
 
 use crate::{
-    Color, Error, FixedGradient, Font, FontBuilder, HitTestPoint, HitTestTextPosition, ImageFormat,
+    Color, Error, FixedGradient, Font, FontStyle, FontBuilder, HitTestPoint, HitTestTextPosition, ImageFormat,
     InterpolationMode, IntoBrush, LineMetric, RenderContext, StrokeStyle, Text, TextLayout,
     TextLayoutBuilder,
 };
@@ -151,7 +151,7 @@ impl Text for NullText {
     type TextLayout = NullTextLayout;
     type TextLayoutBuilder = NullTextLayoutBuilder;
 
-    fn new_font_by_name(&mut self, _name: &str, _size: f64) -> Self::FontBuilder {
+    fn new_font_by_name(&mut self, _name: &str, _size: f64, _weight: u32, _style: FontStyle) -> Self::FontBuilder {
         NullFontBuilder
     }
 
