@@ -240,8 +240,19 @@ impl<'a> RenderContext for WebRenderContext<'a> {
         self.set_brush(&*brush, false);
         let pos = pos.into();
         self.set_stroke(width, None);
-        if let Err(e) = self.ctx.stroke_text(&layout.text, pos.x, pos.y).wrap() {
-            self.err = Err(e);
+        for lm in &layout.line_metrics {
+            let draw_line = self
+                .ctx
+                .stroke_text(
+                    &layout.text[lm.start_offset..lm.end_offset],
+                    pos.x,
+                    pos.y + lm.cumulative_height - lm.height
+                )
+                .wrap();
+
+            if let Err(e) = draw_line {
+                self.err = Err(e);
+            }
         }
     }
 
