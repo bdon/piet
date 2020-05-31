@@ -10,7 +10,7 @@ use cairo::{FontFace, FontOptions, FontSlant, FontWeight, Matrix, ScaledFont};
 use piet::kurbo::Point;
 
 use piet::{
-    Error, Font, FontBuilder, HitTestMetrics, HitTestPoint, HitTestTextPosition, LineMetric,
+    Error, Font, FontBuilder, FontStyle, HitTestMetrics, HitTestPoint, HitTestTextPosition, LineMetric,
     RoundInto, Text, TextLayout, TextLayoutBuilder,
 };
 
@@ -63,7 +63,7 @@ impl<'a> Text for CairoText<'a> {
     type TextLayout = CairoTextLayout;
     type TextLayoutBuilder = CairoTextLayoutBuilder;
 
-    fn new_font_by_name(&mut self, name: &str, size: f64) -> Self::FontBuilder {
+    fn new_font_by_name(&mut self, name: &str, size: f64,weight: u32, style: FontStyle) -> Self::FontBuilder {
         CairoFontBuilder {
             family: name.to_owned(),
             size: size.round_into(),
